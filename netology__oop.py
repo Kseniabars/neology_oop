@@ -41,13 +41,16 @@ class Student:
 Курсы в процессе изучения: {",".join(self.courses_in_progress)}
 Завершенные курсы: Введение в программирование {",".join(self.finished_courses)}"""
 
-    def __cmp__(self, other):
-        if self.val(self.grades)< other.val(other.grades):
-            return -1
-        elif self.val(self.grades)> other.val(other.grades):
-            return 1
-        else:
-            return 0
+    def __gt__(self, other):
+        return self.val(self.grades) > other.val(other.grades)
+
+    def __le__(self, other):
+        return self.val(self.grades) <= other.val(other.grades)
+
+    def __eq__(self, other):
+        return self.val(self.grades) == other.val(other.grades)
+
+
 class Mentor:
 
     def __init__(self, name, surname):
@@ -76,14 +79,15 @@ class Lecturer(Mentor):
 Фамилия: {self.surname}
 Средняя оценка за лекции: {self.value(self.grades)}
 """
-    def __cmp__(self, other):
-        if self.value(self.grades)< other.value(other.grades):
-            return -1
-        elif self.value(self.grades)> other.value(other.grades):
-            return 1
-        else:
-            return 0
 
+    def __gt__(self, other):
+        return self.value(self.grades) > other.value(other.grades)
+
+    def __le__(self, other):
+        return self.value(self.grades) <= other.value(other.grades)
+
+    def __eq__(self, other):
+        return self.value(self.grades) == other.value(other.grades)
 
 class Reviewer(Mentor):
     def __init__(self, name, surname):
@@ -161,8 +165,12 @@ student_2.marks(reviewer_1, "Python", 10)
 student_3.marks(reviewer_2, "Python", 6)
 
 print(student_1.__str__())
-print(lecturer_2.__cmp__(lecturer_3))
-print(student_3.__cmp__(student_2))
+print(student_2.__le__(student_3))
+print(student_1.__eq__(student_2))
+print(student_3.__gt__(student_1))
+print(lecturer_2.__eq__(lecturer_3))
+print(student_3.__gt__(student_2))
+print(student_2.__le__(student_1))
 print(lecturer_1.__str__())
 print(reviewer_2.__str__())
 compare_list_l = [lecturer_1, lecturer_2, lecturer_3]
